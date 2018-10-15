@@ -7,18 +7,24 @@ readFX=function(pair) {
   names(data)[2] = pair
   data
 }
+m=data.frame()
+for (fname in list.files(pattern = "GBP")) {
+  pair=gsub(".json","",fname)
+  print(pair)
+  rates=readFX(pair)
+  rates[,paste0(pair,"scaled")]=rates[,pair]/median(rates[,pair])
+  if (nrow(m)==0) {
+    m=rates
+  } else {
+    m=merge(m,rates)
+  }
+}
 
-gbpeur=readFX("gbpeur")
-gbpusd=readFX("gbpusd")
-gbpjpy=readFX("gbpjpy")
 predit = read.csv("predictit.csv")
 predit$date=as.Date(predit$DateString)
-m=merge(gbpeur,gbpusd)
-m=merge(m, gbpjpy)
-# scale each pair to its median over last 5 years and include 3 pairs in the basket.
-m$gbpavg=(m$gbpeur/median(m$gbpeur)+m$gbpjpy/median(m$gbpjpy)+m$gbpusd/median(m$gbpusd))/3
 
 m=merge(m, predit)
-m=m[,grep("Price|gbp|Volume|date", names(m))]
+m=m[,grep("Price|GBP|Volume|date", names(m))]
 cor(m[,grep("date", names(m),value=T, invert = T)])
 write.csv(x = m, file="result.csv", row.names = F)
+summary(lm(CloseSharePrice~., m[,grep("scaled|Close", names(m))]))
