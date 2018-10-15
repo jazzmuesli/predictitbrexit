@@ -31,5 +31,5 @@ Multiple R-squared:  0.3849,	Adjusted R-squared:  0.3526
 F-statistic: 11.89 on 4 and 76 DF,  p-value: 1.49e-07
 ```
 
-![AN attempt to create flopsy bunny brexit indicatort](flopsybunny.jpg "Flopsy Bunny")
+![Correlogram](corrplot.png "Correlations")
 

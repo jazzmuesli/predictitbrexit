@@ -1,3 +1,4 @@
+library(ggcorrplot)
 library(rjson)
 readFX=function(pair) {
   x=rjson::fromJSON(file=paste0(pair,".json"))
@@ -28,3 +29,5 @@ m=m[,grep("Price|GBP|Volume|date", names(m))]
 cor(m[,grep("date", names(m),value=T, invert = T)])
 write.csv(x = m, file="result.csv", row.names = F)
 summary(lm(CloseSharePrice~., m[,grep("scaled|Close", names(m))]))
+ggcorrplot(cor(m[,grep("date|scaled", names(m),value=T, invert = T)]),type="lower",lab=T)
+ggsave("corrplot.png")
