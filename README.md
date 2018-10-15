@@ -5,6 +5,7 @@ Exchange rates provided by https://www.ofx.com/en-gb/forex-news/historical-excha
 
 The best predictor for CloseSharePrice on predictit is GBPCHF rate:
 
+```
 > summary(lm(CloseSharePrice~., m[,grep("scaled|Close", names(m))]))
 
 Call:
@@ -28,7 +29,7 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Residual standard error: 0.06785 on 76 degrees of freedom
 Multiple R-squared:  0.3849,	Adjusted R-squared:  0.3526 
 F-statistic: 11.89 on 4 and 76 DF,  p-value: 1.49e-07
-
+```
 
 ![AN attempt to create flopsy bunny brexit indicatort](flopsybunny.jpg "Flopsy Bunny")
 
