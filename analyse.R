@@ -3,7 +3,8 @@ library(rjson)
 readFX=function(pair) {
   x=rjson::fromJSON(file=paste0(pair,".json"))
   x$HistoricalPoints[[1]]
-  data=data.frame(date=as.Date(sapply(x$HistoricalPoints, function(s) as.Date(as.POSIXct(as.numeric(s$PointInTime/1000),origin="1970-01-01")))),
+  ftime=function(s) as.POSIXct(as.numeric(s$PointInTime/1000),origin="1970-01-01")
+  data=data.frame(date=as.Date(sapply(x$HistoricalPoints, function(s) as.Date(ftime(s))),origin="1970-01-01"),
                   rate=sapply(x$HistoricalPoints, function(s) s$InterbankRate))
   names(data)[2] = pair
   data
